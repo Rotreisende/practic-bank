@@ -2,7 +2,7 @@ package com.example
 
 import akka.actor.typed.Behavior
 import akka.actor.typed.scaladsl.Behaviors
-import com.example.PaymentsReader.{CheckPayment}
+import com.example.PaymentsReader.CheckPayment
 
 object PaymentChecker {
 

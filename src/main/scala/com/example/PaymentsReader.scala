@@ -1,16 +1,12 @@
 package com.example
 
-import akka.actor._
 import akka.actor.ClassicActorSystemProvider
-import akka.actor.typed.{ActorSystem, Behavior}
 import akka.actor.typed.scaladsl.Behaviors
-import akka.stream.{Materializer, SystemMaterializer}
-import akka.stream.scaladsl.{FileIO, Framing, Sink}
+import akka.actor.typed.{ActorSystem, Behavior}
 import akka.util.ByteString
-import com.example.Main.StartWork
 
-import java.nio.file.Paths
 import java.io.File
+import java.nio.file.Paths
 
 object PaymentsReader{
   sealed trait PaymentSign
