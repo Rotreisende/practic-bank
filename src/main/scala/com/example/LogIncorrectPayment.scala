@@ -5,11 +5,11 @@ import akka.actor.typed.scaladsl.Behaviors
 import com.example.PaymentsReader.CheckPayment
 
 object LogIncorrectPayment {
-  val correctPayment: Behavior[CheckPayment] = Behaviors.setup { context =>
-    Behaviors.receiveMessage {
-      case CheckPayment(payment) =>
-        context.log.info(payment + "- incorrect payment")
-        Behaviors.same
-    }
+  def apply: Behavior[CheckPayment] = Behaviors.receive { (context, message) =>
+      message match {
+        case CheckPayment(payment) =>
+          context.log.info(payment + "- incorrect payment")
+          Behaviors.same
+      }
   }
 }

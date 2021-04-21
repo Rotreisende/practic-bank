@@ -10,10 +10,10 @@ class PaymentParticipant(balance: Long = 0, name: String) extends Actor {
   override def receive: Receive = {
     case Payment(sign, value, participant) => {
       sign match {
-        case _@PositiveSign() =>
+        case _@PositiveSign =>
 
 
-        case _@NegativeSign() =>
+        case _@NegativeSign =>
 
       }
     }
