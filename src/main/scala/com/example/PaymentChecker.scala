@@ -2,7 +2,6 @@ package com.example
 
 import akka.actor.typed.Behavior
 import akka.actor.typed.scaladsl.Behaviors
-import com.example.Main.Factory
 import com.example.PaymentsReader.CheckPayment
 
 object PaymentChecker {
@@ -15,7 +14,6 @@ object PaymentChecker {
           context.log.info(s"Пришло на проверку: $payment")
           val seq = parse(payment)
           context.log.info(s"После парсинга: $seq")
-
           Behaviors.same
         }
       }

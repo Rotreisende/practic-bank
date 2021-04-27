@@ -4,9 +4,20 @@ import akka.actor.typed.{ActorSystem, Behavior}
 import akka.actor.typed.scaladsl.Behaviors
 import com.typesafe.config.{Config, ConfigFactory}
 
+import scala.util.Try
+
+case class PaymentConfig(catalog: String, mask:String)
+
+object PaymentConfig {
+  def apply(rootConfig: Config): PaymentConfig = {
+    val mask = rootConfig.getString("mask")
+    val catalog = rootConfig.getString("root")
+    new PaymentConfig(catalog, mask)
+  }
+}
+
 object Main extends App{
   case class SendMessage(root: String, mask: String)
-  case class Factory(config: Config = ConfigFactory.load())
 
   val helloSayer: Behavior[SendMessage] = Behaviors.setup { context =>
     Behaviors.receiveMessage {
@@ -17,8 +28,17 @@ object Main extends App{
     }
   }
 
-  val mask = Factory().config.getString("mask")
-  val root = Factory().config.getString("root")
   val helloSystem: ActorSystem[SendMessage] = ActorSystem(helloSayer, "root")
-  helloSystem ! SendMessage(root, mask)
+
+  def safelyReadConfig(): Try[PaymentConfig] = {
+    Try {
+      PaymentConfig(ConfigFactory.load())
+    }
+  }
+
+  def unsafeRun(paymentConfig: PaymentConfig) = {
+    helloSystem ! SendMessage(paymentConfig.catalog, paymentConfig.mask)
+  }
+
+  safelyReadConfig().fold(_ => helloSystem.terminate(), unsafeRun)
 }
