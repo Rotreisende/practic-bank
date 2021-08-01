@@ -11,5 +11,6 @@ object Dependencies {
     lazy val logback = "ch.qos.logback" % "logback-classic" % "1.2.3"
     lazy val scalaTest = "org.scalatest" %% "scalatest" % "3.1.0" % Test
     lazy val akkaStream = "com.typesafe.akka" %% "akka-stream" % Version.akka
+    lazy val csvAlpakka =  "com.lightbend.akka" %% "akka-stream-alpakka-csv" % "3.0.1"
   }
 }
